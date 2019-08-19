@@ -1,0 +1,163 @@
+.dialog-wrapper {
+  position: fixed;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  .dialog__header {
+    padding: 20px 20px 0;
+    min-height: 40px;
+    position: relative;
+    .dialog__title {
+      line-height: 1.2;
+      font-size: 16px;
+      font-weight: 700;
+      width: calc(100% - 20px);
+      color: @font-color-primary;
+    }
+    .dialog__close-btn {
+      cursor: pointer;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-size: 18px;
+      color: @font-color-secondary;
+      &:hover {
+        color: @theme-primary;
+      }
+    }
+  }
+  .dialog__body {
+    padding: 20px;
+  }
+  .dialog__footer {
+    padding: 10px 20px 20px 20px;
+    text-align: right;
+    button + button {
+      margin-left: 8px;
+    }
+  }
+  .confirm-body {
+    .confirm-body__header {
+      display: flex;
+      align-items: flex-start;
+      .anticon {
+        flex-shrink: 0;
+        font-size: 22px;
+        margin-right: 12px;
+        &.anticon-question-circle {
+          color: @warning-color;
+        }
+        &.anticon-info-circle {
+          color: @info-color;
+        }
+        &.anticon-check-circle {
+          color: @success-color;
+        }
+        &.anticon-exclamation-circle {
+          color: @warning-color;
+        }
+        &.anticon-cross-circle {
+          color: @error-color;
+        }
+        
+      }
+      .confirm-title {
+        color: @font-color-primary;
+        line-height: 1.35;
+        font-size: 16px;
+      }
+    }
+    .confirm-body__content {
+      color: #8e8e8e;
+      margin-left: 35px;
+      margin-top: 8px;
+      line-height: 1.35;
+    }
+  }
+}
+.dialog-mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  transition: all 500ms;
+}
+.dialog-content {
+  transition: all 0.3s;
+  background-color: white;
+  border-radius: 3px;
+  z-index: 2000;
+  position: relative;
+  box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
+  overflow: scroll;
+  min-width: 300px;
+}
+.dialog-in {
+  animation: DialogEnter 300ms ease-out;
+  animation-iteration-count: 1;
+}
+.dialog-out {
+  animation: DialogOut 300ms linear;
+  animation-iteration-count: 1;
+  opacity: 0;
+}
+@keyframes DialogEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes DialogOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+.dialog-pop-enter, .dialog-pop-exit {
+  .dialog-content {
+    animation-fill-mode: both;
+    animation-play-state: paused;
+  }
+}
+.dialog-pop-enter {
+  .dialog-content {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+.dialog-pop-enter-active {
+  .dialog-content {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.dialog-pop-exit {
+  .dialog-content {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.dialog-pop-exit-active {
+  .dialog-content {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
