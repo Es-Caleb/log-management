@@ -8,11 +8,14 @@ import CategoryMenu from '@/components/main/side/menu';
 import { Input, Icon, Message } from '@/components/lib';
 import { Modal } from 'antd';
 import fetch from '@/utils/fetch';
+// import { Dragact } from 'dragact';
+import Dragger from 'react-dragger-r';
 
 const DIALOG = {
   CREATE: '创建分类',
   UPDATE: '编辑分类'
 };
+
 class Category extends PureComponent {
   constructor (props) {
     super(props);
@@ -247,8 +250,33 @@ class Category extends PureComponent {
         }
       });
   }
+  // fakeData = () => {
+  //   var { dialog } = this.state;
+  //   var Y = 0;
+  //   return dialog.map((item, index) => {
+  //     if (index % 4 === 0) Y++;
+  //     return {
+  //       ...item,
+  //       GridX: (index % 4) * 4,
+  //       GridY: Y * 4,
+  //       w: 4,
+  //       h: 2,
+  //       key: index + ''
+  //     };
+  //   });
+  // }
   render () {
     let { categoryList, match } = this.props, { dialog, menu } = this.state;
+    // const margin = [5, 5];
+    // const dragactInit = {
+    //   width: 600,
+    //   col: 12,
+    //   rowHeight: 800 / 12,
+    //   margin: margin,
+    //   className: 'normal-layout',
+    //   layout: this.fakeData(),
+    //   placeholder: true
+    // };
     return (
       <div className="side-cate-wrap">
         <div className="side-item-header">
@@ -262,26 +290,28 @@ class Category extends PureComponent {
           <div className="cate-list">
             {
               categoryList && categoryList.map((category) => (
-                <div
-                  key={category.id}
-                  className={`cate-item${category.id.toString() === match.params.cid ? ' selected' : ''}${category.id === this.state.hoverCateItem ? ' item-hover' : ''}`}
-                  onClick={() => {
-                    this.changeCategory(category.id);
-                  }}
-                  onMouseOver={() => { this._changeHoverCateId(category.id); }}
-                  onMouseOut={() => {
-                    !menu.open && this._changeHoverCateId('');
-                  }}
-                  onContextMenu={(e) => {
-                    this.showContextMenu(e, category);
-                  }}
-                >
-                  <i className="cate-icon_drag"></i>
-                  <div className="cate-name-box">
-                    <Icon type="folder" className="cate-folder-close" />
-                    {category.name + '' + (category.routeName ? ' (' + category.routeName + ')' : '')}
+                <Dragger allowX = {false} >
+                  <div
+                    key={category.id}
+                    className={`cate-item${category.id.toString() === match.params.cid ? ' selected' : ''}${category.id === this.state.hoverCateItem ? ' item-hover' : ''}`}
+                    onClick={() => {
+                      this.changeCategory(category.id);
+                    }}
+                    onMouseOver={() => { this._changeHoverCateId(category.id); }}
+                    onMouseOut={() => {
+                      !menu.open && this._changeHoverCateId('');
+                    }}
+                    onContextMenu={(e) => {
+                      this.showContextMenu(e, category);
+                    }}
+                  >
+                    <i className="cate-icon_drag"></i>
+                    <div className="cate-name-box">
+                      <Icon type="folder" className="cate-folder-close" />
+                      {category.name + '' + (category.routeName ? ' (' + category.routeName + ')' : '')}
+                    </div>
                   </div>
-                </div>
+                </Dragger>
               ))
             }
           </div>
